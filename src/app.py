@@ -6,7 +6,6 @@ import os
 import time
 import logging
 from sys import stdout
-# from vidgear.gears import WriteGear
 
 # Config
 data_path = 'data-io/'
@@ -14,12 +13,6 @@ input_path = data_path + 'input/input.mkv'
 output_path = data_path + 'output/output.mkv'
 initial_conditions_file = data_path + 'input/initial_conditions.json'
 tracker_type = TrackerType.CSRT
-
-class InitialConditions(object):
-    def __init__(self, object_name, id, coordinates):
-        self.object_name = object_name
-        self.id = id
-        self.coordinates = coordinates
 
 def progress(count, total, suffix=''):
     bar_len = 60
@@ -48,8 +41,8 @@ def create_tracker(tracker_type):
         return cv2.TrackerCSRT_create()
 
 class TrackerWrapper:
-    def __init__(self, name, tracker) -> None:
-        self.name = name
+    def __init__(self, initial_boundig_box, tracker) -> None:
+        self.name = initial_boundig_box
         self.tracker = tracker
 
 def create_and_init_tracker(ref_frame, bbox, name):
@@ -58,10 +51,6 @@ def create_and_init_tracker(ref_frame, bbox, name):
     return TrackerWrapper(name, tracker)
 
 def get_tracking():
-    # json = open(initial_conditions_file)
-    # escaped_json = json.replace("object", "object_name")
-    # j = json.loads(escaped_json)
-    # initial_conditions = InitialConditions(j)
     # 
     trackers = []
     # Read video
