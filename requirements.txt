@@ -1,0 +1,18 @@
+opencv-python-headless==4.5.5.62
+opencv-contrib-python-headless==4.5.5.62
+Pillow==9.0.1
+ffmpeg-python
+# imutils==0.5.4
+# vidgear==0.2.5
+# ffmpeg
+# opencv-python-headless==4.5.1.48
+# opencv-contrib-python-headless==4.5.1.48
+# pip install opencv-python
+# Opencv contrib 4.5.1 using following command
+# pip install opencv-contrib-python
+# Install Openh264 using following command
+# conda install openh264
+# av for ffmpeg using following command
+# pip install av
+# openh264
+# av

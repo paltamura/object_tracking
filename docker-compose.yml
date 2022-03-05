@@ -1,0 +1,8 @@
+version: "3.9"
+services:
+  app:
+    build: .
+    volumes:
+      - .:/docker-volume
+    environment:
+      - PYTHONUNBUFFERED=1
