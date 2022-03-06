@@ -1,0 +1,1 @@
+In this folder the output video file will be created.
