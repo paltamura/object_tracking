@@ -6,20 +6,21 @@ import cv2
 class H264Writer():
     def __init__(self, output_file, bitrate, fps):
         br_string = str(bitrate) + "k"
-        self.p = Popen(['ffmpeg', 
+        self.p = Popen([
+                'ffmpeg', 
                 '-hide_banner',
                 '-loglevel', 'quiet',
                 '-y', 
                 '-f', 
                 'image2pipe', 
-                '-vcodec', 'mjpeg', 
                 '-r', str(fps), 
                 '-i', '-', 
                 '-vcodec', 'h264', 
                 '-qscale:a', '5', # 5
-                '-b:v', br_string,
+                '-b:a', br_string,
                 '-minrate', br_string,
                 '-maxrate', br_string,
+                # '-crf', '26',
                 output_file], stdin=PIPE)
 
     def __enter__(self):

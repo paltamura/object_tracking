@@ -68,6 +68,7 @@ class MultiTracker():
 
         fps = 24
         bitrate = int(video.get(cv2.CAP_PROP_BITRATE))
+        # bitrate = 3000
         sys.stdout.write('bitrate:' + str(bitrate) + '\n')   
         total_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
         with H264Writer(video_output_file, bitrate, fps) as h264Writer:
