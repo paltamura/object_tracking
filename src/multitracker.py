@@ -31,7 +31,7 @@ class TrackerWrapper:
 
 
 class MultiTracker():
-    tracker_type = TrackerType.CSRT
+    
 
     def create_tracker(self, tracker_type):
         if tracker_type.name == 'BOOSTING':
@@ -51,18 +51,28 @@ class MultiTracker():
         if tracker_type.name == "CSRT":
             return cv2.TrackerCSRT_create()
 
-    def create_and_init_tracker(self, ref_frame, initial_condition):
+    def create_and_init_tracker(self, ref_frame, initial_condition, tracker_type):
         coordinates = initial_condition.coordinates
-        tracker = self.create_tracker(self.tracker_type)
+        tracker = self.create_tracker(tracker_type)
         tracker.init(ref_frame, tuple(coordinates))
         return TrackerWrapper(initial_condition, tracker)
 
-    def tracking_calculate(self, initial_conditions, video_input_file, video_output_file):
+    def tracking_calculate(
+        self, 
+        initial_conditions,
+        _video_input_file,
+        _video_output_file,
+        _tracker_algorithm,
+        _vcodec,
+        _compression_log_level,
+        _output_fps,
+        _output_bitrate,
+        _output_bitrate_inherits_from_input):
 
-        if not exists(video_input_file):
-            Helper.get_log().error('Could not open ' + video_input_file)
+        if not exists(_video_input_file):
+            Helper.get_log().error('Could not open ' + _video_input_file)
             sys.exit()
-        video = cv2.VideoCapture(video_input_file)
+        video = cv2.VideoCapture(_video_input_file)
 
         if not video.isOpened():
             Helper.get_log().error("Could not open video")
@@ -76,11 +86,14 @@ class MultiTracker():
         tracker_wrappers = []
         for initial_condition in initial_conditions:
             tracker_wrappers.append(self.create_and_init_tracker(
-                first_frame, initial_condition))
+                first_frame, initial_condition, TrackerType[_tracker_algorithm]))
 
-        fps = 24
+        # fps = 24
         # bitrate = 3000
-        bitrate = int(video.get(cv2.CAP_PROP_BITRATE))
+        bitrate = _output_bitrate
+        if _output_bitrate_inherits_from_input:
+            bitrate = int(video.get(cv2.CAP_PROP_BITRATE))
+
         total_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
         Helper.get_log().info('=====================================================================')
         Helper.get_log().info('Input')
@@ -100,7 +113,7 @@ class MultiTracker():
         Helper.progress(i, total_frames, suffix=suffix)
         first_iteration = True
         faults = 0
-        with H264Writer(video_output_file, bitrate, fps) as h264Writer:
+        with H264Writer(_video_output_file, bitrate, _output_fps) as h264Writer:
             while True:
                 # Reincorporar el primer frame
                 if first_iteration:  
@@ -149,4 +162,4 @@ class MultiTracker():
         Helper.get_log().info('=====================================================================')
         Helper.get_log().info(str(sucess_case_count) + ' bounding boxes detected, over an total of ' + str(total_bounding_boxes))
         Helper.get_log().info(str(total_frames) + ' frames analyzed by ' + str(trackers_count) + ' trackers.')
-        Helper.get_log().info('Output file was persisted in ' + video_output_file)
+        Helper.get_log().info('Output file was persisted in ' + _video_output_file)

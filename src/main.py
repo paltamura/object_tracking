@@ -23,11 +23,29 @@ def get_initial_conditions_from_json(json_input):
         sys.exit()
 
 
-def tracking_calculate(_initial_conditions_file, _video_input_file, _video_output_file):
+def tracking_calculate(
+        _initial_conditions_file, 
+        _video_input_file, 
+        _video_output_file, 
+        _tracker_algorithm,
+        _vcodec,
+        _compression_log_level,
+        _output_fps,
+        _output_bitrate,
+        _output_bitrate_inherits_from_input):
     # Get initial conditions
     initial_conditions = get_initial_conditions_from_json(_initial_conditions_file)
     # Invoke main process
-    MultiTracker().tracking_calculate(initial_conditions, _video_input_file, _video_output_file)
+    MultiTracker().tracking_calculate(
+        initial_conditions, 
+        _video_input_file, 
+        _video_output_file, 
+        _tracker_algorithm,
+        _vcodec,
+        _compression_log_level,
+        _output_fps,
+        _output_bitrate,
+        _output_bitrate_inherits_from_input)
 
 
 if __name__ == "__main__":
@@ -43,7 +61,7 @@ if __name__ == "__main__":
     compression_log_level = config['Video Compression']['CompressionLogLevel']
     output_fps = config['Video Compression']['OutputFps']
     output_bitrate = config['Video Compression']['OutputBitrate']
-    output_crf = config['Video Compression']['OutputCrf']
+    output_bitrate_inherits_from_input = config['Video Compression']['OutputBitrateInheritsFromInput']
     # Print configurations
     Helper.get_log().info('=====================================================================')
     Helper.get_log().info('Configurations')
@@ -59,7 +77,7 @@ if __name__ == "__main__":
     Helper.get_log().info(' • compression_log_level: ' + compression_log_level)
     Helper.get_log().info(' • output_fps: ' + output_fps)
     Helper.get_log().info(' • output_bitrate: ' + output_bitrate)
-    Helper.get_log().info(' • output_crf: ' + output_crf)
+    Helper.get_log().info(' • output_bitrate_inherits_from_input: ' + output_bitrate_inherits_from_input)
     Helper.get_log().info('')
     # I make sure the input path exists.
     if not exists(input_path):
@@ -68,4 +86,13 @@ if __name__ == "__main__":
     # I make sure the output path exists.
     os.makedirs(output_path, exist_ok=True)
     # TODO: Pasar todas las config por argumentos.
-    tracking_calculate(initial_conditions_file, video_input_file, video_output_file)
+    tracking_calculate(
+        initial_conditions_file, 
+        video_input_file, 
+        video_output_file, 
+        tracker_algorithm,
+        vcodec,
+        compression_log_level,
+        output_fps,
+        output_bitrate,
+        output_bitrate_inherits_from_input)

@@ -16,10 +16,12 @@ class H264Writer():
                 '-r', str(fps), 
                 '-i', '-', 
                 '-vcodec', 'h264', 
-                '-qscale:a', '5', # 5
-                '-b:a', br_string,
-                '-minrate', br_string,
-                '-maxrate', br_string,
+                '-qscale:v', '5', # 5
+                # '-b:v', br_string,
+                # '-minrate', br_string,
+                # '-maxrate', br_string,
+                '-b:v', br_string,
+                '-bufsize', br_string,
                 # '-crf', '26',
                 output_file], stdin=PIPE)
 
