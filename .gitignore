@@ -129,4 +129,9 @@ dmypy.json
 .pyre/
 
 # Datos
-data-io/
+
+# data-io/
+*.json
+*.mvk
+
+
