@@ -34,24 +34,24 @@ class H264Writer():
         im = Image.fromarray(frame)
         im.save(self.p.stdin, 'JPEG')
 
-if __name__ == "__main__":
-    sys.stderr.write('Inicio... \n')
-    data_path = 'data-io/'
-    input_path = data_path + 'input/input.mkv'
-    output_path = data_path + 'output/output.mkv'
-    bitrate = 3000
-    fps = 24
+# if __name__ == "__main__":
+#     sys.stderr.write('Inicio... \n')
+#     data_path = 'data-io/'
+#     input_path = data_path + 'input/input.mkv'
+#     output_path = data_path + 'output/output.mkv'
+#     bitrate = 3000
+#     fps = 24
 
-    video = cv2.VideoCapture(input_path)
+#     video = cv2.VideoCapture(input_path)
 
-    with H264Writer(output_path, bitrate, fps) as h264Writer:
-        while True:
-            exists, cv2_frame = video.read()
-            if exists:
-                frame = cv2.cvtColor(cv2_frame, cv2.COLOR_BGR2RGB)
-                h264Writer.add_frame(frame)
-            else:
-                break
+#     with H264Writer(output_path, bitrate, fps) as h264Writer:
+#         while True:
+#             exists, cv2_frame = video.read()
+#             if exists:
+#                 frame = cv2.cvtColor(cv2_frame, cv2.COLOR_BGR2RGB)
+#                 h264Writer.add_frame(frame)
+#             else:
+#                 break
 
-    video.release()
-    sys.stderr.write('Ok! \n')   
+#     video.release()
+#     sys.stderr.write('Ok! \n')   

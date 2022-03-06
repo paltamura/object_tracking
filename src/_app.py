@@ -7,12 +7,6 @@ import time
 import logging
 from sys import stdout
 
-# Config
-data_path = 'data-io/'
-input_path = data_path + 'input/input.mkv'
-output_path = data_path + 'output/output.mkv'
-initial_conditions_file = data_path + 'input/initial_conditions.json'
-tracker_type = TrackerType.CSRT
 
 def progress(count, total, suffix=''):
     bar_len = 60
@@ -22,33 +16,43 @@ def progress(count, total, suffix=''):
     logger.info('[%s] %s%s ...%s\r' % (bar, percents, '%', suffix))
     sys.stdout.flush()
 
-def create_tracker(tracker_type):
-    if tracker_type.name == 'BOOSTING':
-        return cv2.TrackerBoosting_create()
-    if tracker_type.name == 'MIL':
-        return cv2.TrackerMIL_create()
-    if tracker_type.name == 'KCF':
-        return cv2.TrackerKCF_create()
-    if tracker_type.name == 'TLD':
-        return cv2.TrackerTLD_create()
-    if tracker_type.name == 'MEDIANFLOW':
-        return cv2.TrackerMedianFlow_create()
-    if tracker_type.name == 'GOTURN':
-        return cv2.TrackerGOTURN_create()
-    if tracker_type.name == 'MOSSE':
-        return cv2.TrackerMOSSE_create()
-    if tracker_type.name == "CSRT":
-        return cv2.TrackerCSRT_create()
 
-class TrackerWrapper:
-    def __init__(self, initial_boundig_box, tracker) -> None:
-        self.name = initial_boundig_box
-        self.tracker = tracker
 
-def create_and_init_tracker(ref_frame, bbox, name):
-    tracker = create_tracker(tracker_type)
-    tracker.init(ref_frame, bbox)
-    return TrackerWrapper(name, tracker)
+
+# # Config
+# data_path = 'data-io/'
+# input_path = data_path + 'input/input.mkv'
+# output_path = data_path + 'output/output.mkv'
+# initial_conditions_file = data_path + 'input/initial_conditions.json'
+# tracker_type = TrackerType.CSRT
+
+# def create_tracker(tracker_type):
+#     if tracker_type.name == 'BOOSTING':
+#         return cv2.TrackerBoosting_create()
+#     if tracker_type.name == 'MIL':
+#         return cv2.TrackerMIL_create()
+#     if tracker_type.name == 'KCF':
+#         return cv2.TrackerKCF_create()
+#     if tracker_type.name == 'TLD':
+#         return cv2.TrackerTLD_create()
+#     if tracker_type.name == 'MEDIANFLOW':
+#         return cv2.TrackerMedianFlow_create()
+#     if tracker_type.name == 'GOTURN':
+#         return cv2.TrackerGOTURN_create()
+#     if tracker_type.name == 'MOSSE':
+#         return cv2.TrackerMOSSE_create()
+#     if tracker_type.name == "CSRT":
+#         return cv2.TrackerCSRT_create()
+
+# class TrackerWrapper:
+#     def __init__(self, initial_boundig_box, tracker) -> None:
+#         self.name = initial_boundig_box
+#         self.tracker = tracker
+
+# def create_and_init_tracker(ref_frame, bbox, name):
+#     tracker = create_tracker(tracker_type)
+#     tracker.init(ref_frame, bbox)
+#     return TrackerWrapper(name, tracker)
 
 def get_tracking():
     # 
