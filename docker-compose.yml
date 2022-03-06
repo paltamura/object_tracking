@@ -5,4 +5,4 @@ services:
     volumes:
       - .:/docker-volume
     environment:
-      - PYTHONUNBUFFERED=1
+      - PYTHONUNBUFFERED=0

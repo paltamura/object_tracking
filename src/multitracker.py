@@ -3,6 +3,7 @@ import sys
 import cv2
 from h264writer import H264Writer
 from helper import Helper
+from os.path import exists
 
 
 class TrackerType(Enum):
@@ -30,7 +31,6 @@ class TrackerWrapper:
 
 
 class MultiTracker():
-    # def __init__(self):
     tracker_type = TrackerType.CSRT
 
     def create_tracker(self, tracker_type):
@@ -58,20 +58,25 @@ class MultiTracker():
         return TrackerWrapper(initial_condition, tracker)
 
     def tracking_calculate(self, initial_conditions, video_input_file, video_output_file):
-        tracker_wrappers = []
+
+        if not exists(video_input_file):
+            Helper.get_log().error('Could not open ' + video_input_file)
+            sys.exit()
         video = cv2.VideoCapture(video_input_file)
+
         if not video.isOpened():
             Helper.get_log().error("Could not open video")
             sys.exit()
         ok, first_frame = video.read()
+
         if not ok:
             Helper.get_log().error('Cannot read video file')
             sys.exit()
 
+        tracker_wrappers = []
         for initial_condition in initial_conditions:
             tracker_wrappers.append(self.create_and_init_tracker(
                 first_frame, initial_condition))
-
 
         fps = 24
         # bitrate = 3000
@@ -83,6 +88,8 @@ class MultiTracker():
         Helper.get_log().info('Initial conditions with ' + str(len(initial_conditions)) + ' bounding boxes founded')
         Helper.get_log().info('Input video file readed with ' + str(total_frames) + ' frames' + ' and bitrate of ' + str(bitrate))
         Helper.get_log().info('')
+
+        # Print process progress
         Helper.get_log().info('=====================================================================')
         Helper.get_log().info('Process')
         Helper.get_log().info('=====================================================================')
@@ -95,7 +102,8 @@ class MultiTracker():
         faults = 0
         with H264Writer(video_output_file, bitrate, fps) as h264Writer:
             while True:
-                if first_iteration:  # Necesitamos reincorporar el primer frame
+                # Reincorporar el primer frame
+                if first_iteration:  
                     first_iteration = False
                     cv2_frame = first_frame
                     has = True
@@ -112,14 +120,11 @@ class MultiTracker():
                             p2 = (int(bbox[0] + bbox[2]),
                                   int(bbox[1] + bbox[3]))
                             cv2.rectangle(cv2_frame, p1, p2, (255, 0, 0), 2, 1)
-                            name = tracker_wrapper.initial_condition.object_name + \
-                                str(tracker_wrapper.initial_condition.id)
-                            cv2.putText(
-                                cv2_frame, name, p1, cv2.FONT_HERSHEY_SIMPLEX, 0.75, (50, 170, 50), 2)
+                            name = tracker_wrapper.initial_condition.object_name + str(tracker_wrapper.initial_condition.id)
+                            cv2.putText(cv2_frame, name, p1, cv2.FONT_HERSHEY_SIMPLEX, 0.75, (50, 170, 50), 2)
                         else:
                             # Tracking failure
-                            cv2.putText(cv2_frame, "Tracking failure detected",
-                                        (100, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2)
+                            cv2.putText(cv2_frame, "Tracking failure detected", (100, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2)
                             Helper.get_log().info('Tracking failure detected in frame number ' + i)
                             faults += 1
 
@@ -130,10 +135,11 @@ class MultiTracker():
                         Helper.progress(i+1, total_frames, suffix=suffix)
                 else:
                     break
+
         video.release()
         Helper.get_log().info('Tracking calculate completed successfully.')
         Helper.get_log().info('')
-        #
+
         # Print some metrics summary
         trackers_count = len(tracker_wrappers)
         total_bounding_boxes = (total_frames * trackers_count)
@@ -144,4 +150,3 @@ class MultiTracker():
         Helper.get_log().info(str(sucess_case_count) + ' bounding boxes detected, over an total of ' + str(total_bounding_boxes))
         Helper.get_log().info(str(total_frames) + ' frames analyzed by ' + str(trackers_count) + ' trackers.')
         Helper.get_log().info('Output file was persisted in ' + video_output_file)
-        Helper.get_log().info('')

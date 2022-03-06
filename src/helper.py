@@ -1,6 +1,7 @@
 import configparser
 import logging
 from sys import stdout
+import sys
 
 
 class Helper:
@@ -35,4 +36,4 @@ class Helper:
         percents = round(100.0 * count / float(total), 0)
         bar = '■' * filled_len + '-' * (bar_len - filled_len)
         Helper.get_log().info('[%s] %3.0f (%s %s)\r' % (bar, percents, '%', suffix))
-        # sys.stdout.flush()
+        sys.stdout.flush()
