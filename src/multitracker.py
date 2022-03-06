@@ -58,7 +58,6 @@ class MultiTracker():
         return TrackerWrapper(initial_condition, tracker)
 
     def tracking_calculate(self, initial_conditions, video_input_file, video_output_file):
-
         tracker_wrappers = []
         video = cv2.VideoCapture(video_input_file)
         if not video.isOpened():
@@ -73,15 +72,36 @@ class MultiTracker():
             tracker_wrappers.append(self.create_and_init_tracker(
                 first_frame, initial_condition))
 
+
         fps = 24
-        bitrate = int(video.get(cv2.CAP_PROP_BITRATE))
         # bitrate = 3000
-        sys.stdout.write('bitrate:' + str(bitrate) + '\n')
+        bitrate = int(video.get(cv2.CAP_PROP_BITRATE))
         total_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
+        Helper.get_log().info('=====================================================================')
+        Helper.get_log().info('Input')
+        Helper.get_log().info('=====================================================================')
+        Helper.get_log().info('Initial conditions with ' + str(len(initial_conditions)) + ' bounding boxes founded')
+        Helper.get_log().info('Input video file readed with ' + str(total_frames) + ' frames' + ' and bitrate of ' + str(bitrate))
+        Helper.get_log().info('')
+        Helper.get_log().info('=====================================================================')
+        Helper.get_log().info('Process')
+        Helper.get_log().info('=====================================================================')
+        Helper.get_log().info('Start to tracking calculate . . .')
+        frac = total_frames / 10
+        i = 0
+        suffix = 'Processed frames'
+        Helper.progress(i, total_frames, suffix=suffix)
+        first_iteration = True
+        faults = 0
         with H264Writer(video_output_file, bitrate, fps) as h264Writer:
             while True:
-                exists, cv2_frame = video.read()
-                if exists:
+                if first_iteration:  # Necesitamos reincorporar el primer frame
+                    first_iteration = False
+                    cv2_frame = first_frame
+                    has = True
+                else:
+                    has, cv2_frame = video.read()
+                if has:
                     for tracker_wrapper in tracker_wrappers:
                         # Update tracker
                         ok, bbox = tracker_wrapper.tracker.update(cv2_frame)
@@ -100,45 +120,28 @@ class MultiTracker():
                             # Tracking failure
                             cv2.putText(cv2_frame, "Tracking failure detected",
                                         (100, 80), cv2.FONT_HERSHEY_SIMPLEX, 0.75, (0, 0, 255), 2)
+                            Helper.get_log().info('Tracking failure detected in frame number ' + i)
+                            faults += 1
+
                     frame = cv2.cvtColor(cv2_frame, cv2.COLOR_BGR2RGB)
                     h264Writer.add_frame(frame)
+                    i += 1
+                    if i % frac == 0:
+                        Helper.progress(i+1, total_frames, suffix=suffix)
                 else:
                     break
-
-        # while True:
-        #     # Read a new frame
-        #     ok, frame = video.read()
-        #     if not ok:
-        #         break
-
-        #     # Start timer
-        #     timer = cv2.getTickCount()
-
-        #     # Calculate Frames per second (FPS)
-        #     fps = cv2.getTickFrequency() / (cv2.getTickCount() - timer);
-
-        #     for tracker_wrapper in tracker_wrappers:
-        #         # Update tracker
-        #         ok, bbox = tracker_wrapper.tracker.update(frame)
-        #         # Draw bounding box
-        #         if ok:
-        #             # Tracking success
-        #             p1 = (int(bbox[0]), int(bbox[1]))
-        #             p2 = (int(bbox[0] + bbox[2]), int(bbox[1] + bbox[3]))
-        #             cv2.rectangle(frame, p1, p2, (255,0,0), 2, 1)
-        #             cv2.putText(frame, tracker_wrapper.name , p1, cv2.FONT_HERSHEY_SIMPLEX, 0.75, (50,170,50),2);
-        #         else :
-        #             # Tracking failure
-        #             cv2.putText(frame, "Tracking failure detected", (100,80), cv2.FONT_HERSHEY_SIMPLEX, 0.75,(0,0,255),2)
-
-        #     # Write frame
-        #     output.write(frame)
-
-        #     i += 1
-        #     # if (i-1) % 10 == 0:
-        #     #     progress(i+1, total_frames, suffix='')
-
-        # # Release the objects
-        # # progress(total_frames, total_frames, suffix='')
         video.release()
-        # output.release()
+        Helper.get_log().info('Tracking calculate completed successfully.')
+        Helper.get_log().info('')
+        #
+        # Print some metrics summary
+        trackers_count = len(tracker_wrappers)
+        total_bounding_boxes = (total_frames * trackers_count)
+        sucess_case_count = (total_frames * trackers_count) - faults
+        Helper.get_log().info('=====================================================================')
+        Helper.get_log().info('Summary')
+        Helper.get_log().info('=====================================================================')
+        Helper.get_log().info(str(sucess_case_count) + ' bounding boxes detected, over an total of ' + str(total_bounding_boxes))
+        Helper.get_log().info(str(total_frames) + ' frames analyzed by ' + str(trackers_count) + ' trackers.')
+        Helper.get_log().info('Output file was persisted in ' + video_output_file)
+        Helper.get_log().info('')

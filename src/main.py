@@ -39,23 +39,23 @@ if __name__ == "__main__":
     output_bitrate = config['Video Compression']['OutputBitrate']
     output_crf = config['Video Compression']['OutputCrf']
     #
-    # Print configurations used
+    # Print configurations
     Helper.get_log().info('=====================================================================')
-    Helper.get_log().info('Tracking processing is initialized with these configurations')
+    Helper.get_log().info('Configurations')
     Helper.get_log().info('=====================================================================')
     Helper.get_log().info('PATHS')
-    Helper.get_log().info(' > initial_conditions_file: ' + initial_conditions_file)
-    Helper.get_log().info(' > video_input_file: ' + video_input_file)
-    Helper.get_log().info(' > video_output_file: ' + video_output_file)
+    Helper.get_log().info(' • initial_conditions_file: ' + initial_conditions_file)
+    Helper.get_log().info(' • video_input_file: ' + video_input_file)
+    Helper.get_log().info(' • video_output_file: ' + video_output_file)
     Helper.get_log().info('TRACKING')
-    Helper.get_log().info(' > tracker_algorithm: ' + tracker_algorithm)
+    Helper.get_log().info(' • tracker_algorithm: ' + tracker_algorithm)
     Helper.get_log().info('COMPRESSION')
-    Helper.get_log().info(' > vcodec: ' + vcodec)
-    Helper.get_log().info(' > compression_log_level: ' + compression_log_level)
-    Helper.get_log().info(' > output_fps: ' + output_fps)
-    Helper.get_log().info(' > output_bitrate: ' + output_bitrate)
-    Helper.get_log().info(' > output_crf: ' + output_crf)
-    Helper.get_log().info('=====================================================================')
+    Helper.get_log().info(' • vcodec: ' + vcodec)
+    Helper.get_log().info(' • compression_log_level: ' + compression_log_level)
+    Helper.get_log().info(' • output_fps: ' + output_fps)
+    Helper.get_log().info(' • output_bitrate: ' + output_bitrate)
+    Helper.get_log().info(' • output_crf: ' + output_crf)
+    Helper.get_log().info('')
     #
     # aca pasar toda la config por argumentos y tambien imprimir que se va a procesar y como en stdout.
     tracking_calculate(initial_conditions_file, video_input_file, video_output_file)

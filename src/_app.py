@@ -90,7 +90,6 @@ def get_tracking():
     # Initial call to print 0% progress
     bitrate = int(video.get(cv2.CAP_PROP_BITRATE))
     total_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
-    # printProgressBar(0, total_frames, prefix = 'Progress:', suffix = 'Complete', length = 50)
     progress(0, total_frames, suffix='')
     i=0
     while True:
