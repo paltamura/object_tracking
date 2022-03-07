@@ -85,7 +85,7 @@ if __name__ == "__main__":
         sys.exit()
     # I make sure the output path exists.
     os.makedirs(output_path, exist_ok=True)
-    # TODO: Pasar todas las config por argumentos.
+    # Invoke main process
     tracking_calculate(
         initial_conditions_file, 
         video_input_file, 

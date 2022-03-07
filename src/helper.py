@@ -30,7 +30,7 @@ class Helper:
             Helper.__logger.addHandler(consoleHandler)
         return Helper.__logger
 
-    def progress(count, total, suffix=''):
+    def progress(count, total, suffix = ''):
         bar_len = 42
         filled_len = int(round(bar_len * count / float(total)))
         percents = round(100.0 * count / float(total), 0)
