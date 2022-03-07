@@ -38,7 +38,7 @@ docker-compose up
 ```
 
 ## Expected results in one frame of video output 
-<img src="https://user-images.githubusercontent.com/84106110/156944048-a6efe75f-6773-446f-a057-3b9b9442c1fe.png" width=30% height=30%>
+<img src="https://user-images.githubusercontent.com/84106110/156944048-a6efe75f-6773-446f-a057-3b9b9442c1fe.png" width=40% height=40%>
 
 ## Development notes 
 
