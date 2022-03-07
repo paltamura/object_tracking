@@ -8,12 +8,14 @@ class Helper:
     __config = None
     __logger = None
 
+    # Returns the configuration
     def get_config():
         if Helper.__config is None:
             Helper.__config = configparser.ConfigParser()
             Helper.__config.read('./configurations.ini')
         return Helper.__config
 
+    # Returns the log object
     def get_log():
         if Helper.__logger is None:
             Helper.__logger = logging.getLogger('MT')
@@ -30,6 +32,7 @@ class Helper:
             Helper.__logger.addHandler(consoleHandler)
         return Helper.__logger
 
+    # Print a progress bar in console
     def progress(count, total, suffix = ''):
         bar_len = 42
         filled_len = int(round(bar_len * count / float(total)))

@@ -36,6 +36,7 @@ class H264Writer():
         self.p.stdin.close()
         self.p.wait()
 
+    # Compress and add a new frame to the collection to be persisted.
     def add_frame(self, frame):
         im = Image.fromarray(frame)
         im.save(self.p.stdin, 'JPEG')

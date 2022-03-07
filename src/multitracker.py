@@ -32,7 +32,7 @@ class TrackerWrapper:
 # class used to process a video input together with a collection of initial bounding boxes, 
 # and obtain an output video with the tracking of the objects contained in said bounding boxes.
 class MultiTracker():
-    def create_tracker(tracker_type):
+    def _create_tracker(tracker_type):
         if tracker_type.name == 'BOOSTING':
             return cv2.TrackerBoosting_create()
         if tracker_type.name == 'MIL':
@@ -50,12 +50,13 @@ class MultiTracker():
         if tracker_type.name == "CSRT":
             return cv2.TrackerCSRT_create()
 
-    def create_and_init_tracker(ref_frame, initial_condition, tracker_type):
+    def _create_and_init_tracker(ref_frame, initial_condition, tracker_type):
         coordinates = initial_condition.coordinates
-        tracker = MultiTracker.create_tracker(tracker_type)
+        tracker = MultiTracker._create_tracker(tracker_type)
         tracker.init(ref_frame, tuple(coordinates))
         return TrackerWrapper(initial_condition, tracker)
 
+    # Entry point of MultiTracker
     def tracking_calculate(
         initial_conditions,
         _video_input_file,
@@ -86,7 +87,7 @@ class MultiTracker():
 
         tracker_wrappers = []
         for initial_condition in initial_conditions:
-            tracker_wrappers.append(MultiTracker.create_and_init_tracker(
+            tracker_wrappers.append(MultiTracker._create_and_init_tracker(
                 first_frame, initial_condition, TrackerType[_tracker_algorithm]))
 
         efective_bitrate = _output_bitrate
