@@ -82,7 +82,7 @@ _Tools used to create this project_
 
 ## License 📄
 
-This project is licensed under the MIT License - see the file [LICENSE.md](LICENSE.md) for details
+This project is licensed under the MIT License - see the file [LICENSE](LICENSE) for details
 
 ---
 ⌨️ with ❤️ by [paltamura](https://github.com/paltamura) 😊
