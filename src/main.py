@@ -6,7 +6,7 @@ from helper import Helper
 from os.path import exists
 
 
-def get_initial_conditions_from_json(json_input):
+def _get_initial_conditions_from_json(json_input):
     if not exists(json_input):
         Helper.get_log().error('Could not open ' + json_input)
         sys.exit()
@@ -23,7 +23,7 @@ def get_initial_conditions_from_json(json_input):
         sys.exit()
 
 
-def tracking_calculate(
+def _tracking_calculate(
         _initial_conditions_file, 
         _video_input_file, 
         _video_output_file, 
@@ -34,7 +34,7 @@ def tracking_calculate(
         _output_bitrate,
         _output_bitrate_inherits_from_input):
     # Get initial conditions
-    initial_conditions = get_initial_conditions_from_json(_initial_conditions_file)
+    initial_conditions = _get_initial_conditions_from_json(_initial_conditions_file)
     # Invoke main process
     MultiTracker.tracking_calculate(
         initial_conditions, 
@@ -86,7 +86,7 @@ if __name__ == "__main__":
     # I make sure the output path exists.
     os.makedirs(output_path, exist_ok=True)
     # Invoke main process
-    tracking_calculate(
+    _tracking_calculate(
         initial_conditions_file, 
         video_input_file, 
         video_output_file, 
