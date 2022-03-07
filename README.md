@@ -41,7 +41,7 @@ docker-compose up
 
 ## Development notes 
 
-To solve the main process (object tracking) it was decided to use the ***OpenCV Tracker***, since it meets the expectations of the project.
+To solve the main process (object tracking) it was decided to use the ***OpenCV***, since it meets the expectations of the project.
 
 The input video file is read and converted to frames with the help of ***OpenCV***. After processing it is compressed and persisted using ***FFmpeg*** as a process called from python through ***subprocess***.
 
