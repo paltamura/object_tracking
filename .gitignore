@@ -129,9 +129,6 @@ dmypy.json
 .pyre/
 
 # Datos
-
-# data-io/
-*.json
-*.mkv
+data-io/
 
 
