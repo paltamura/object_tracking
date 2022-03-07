@@ -70,14 +70,16 @@ A ***docker-compose.yml*** file was also created in which the construction of th
       subprocess-->FFmpeg;
 ```
 
-
 ## Construido con 🛠️
 
 _Herramientas utilizadas para crear este proyecto_
-
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - El framework web usado
-* [Maven](https://maven.apache.org/) - Manejador de dependencias
-* [ROME](https://rometools.github.io/rome/) - Usado para generar RSS
+* [Dropwizard](https://docs.python.org/3/library/subprocess.html) - El framework web usado
+* [Dropwizard](https://docs.python.org/3/library/configparser.html#supported-ini-file-structure) - El framework web usado
+* [Dropwizard](https://docs.docker.com/compose/) - El framework web usado
+* [Dropwizard](https://www.docker.com/) - El framework web usado
+* [Dropwizard](https://ffmpeg.org/ffmpeg.html) - El framework web usado
+* [Dropwizard](https://opencv.org/) - El framework web usado
+* [Dropwizard](https://github.com/cisco/openh264) - El framework web usado
 
 ## Licencia 📄
 
