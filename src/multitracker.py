@@ -90,16 +90,16 @@ class MultiTracker():
 
         # fps = 24
         # bitrate = 3000
-        bitrate = _output_bitrate
+        efective_bitrate = _output_bitrate
         if _output_bitrate_inherits_from_input:
-            bitrate = int(video.get(cv2.CAP_PROP_BITRATE))
+            efective_bitrate = int(video.get(cv2.CAP_PROP_BITRATE))
 
         total_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
         Helper.get_log().info('=====================================================================')
         Helper.get_log().info('Input')
         Helper.get_log().info('=====================================================================')
         Helper.get_log().info('Initial conditions with ' + str(len(initial_conditions)) + ' bounding boxes founded')
-        Helper.get_log().info('Input video file readed with ' + str(total_frames) + ' frames' + ' and bitrate of ' + str(bitrate))
+        Helper.get_log().info('Input video file readed with ' + str(total_frames) + ' frames' + ' and bitrate of ' + str(efective_bitrate))
         Helper.get_log().info('')
 
         # Print process progress
@@ -113,7 +113,12 @@ class MultiTracker():
         Helper.progress(i, total_frames, suffix=suffix)
         first_iteration = True
         faults = 0
-        with H264Writer(_video_output_file, bitrate, _output_fps) as h264Writer:
+        with H264Writer(
+            _video_output_file, 
+            efective_bitrate, 
+            _output_fps, 
+            _vcodec, 
+            _compression_log_level) as h264Writer:
             while True:
                 # Reincorporar el primer frame
                 if first_iteration:  

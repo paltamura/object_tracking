@@ -131,7 +131,7 @@ dmypy.json
 # Datos
 
 # data-io/
-*.json
-*.mkv
+# *.json
+# *.mkv
 
 

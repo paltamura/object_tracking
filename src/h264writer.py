@@ -4,18 +4,25 @@ from subprocess import Popen, PIPE
 import cv2
 
 class H264Writer():
-    def __init__(self, output_file, bitrate, fps):
+    def __init__(
+        self, 
+        output_file, 
+        bitrate, 
+        fps,
+        vcodec, 
+        compression_log_level):
+
         br_string = str(bitrate) + "k"
         self.p = Popen([
                 'ffmpeg', 
                 '-hide_banner',
-                '-loglevel', 'quiet',
+                '-loglevel', compression_log_level,
                 '-y', 
                 '-f', 
                 'image2pipe', 
                 '-r', str(fps), 
                 '-i', '-', 
-                '-vcodec', 'h264', 
+                '-vcodec', vcodec, 
                 '-qscale:v', '5', # 5
                 # '-b:v', br_string,
                 # '-minrate', br_string,
