@@ -36,7 +36,7 @@ def tracking_calculate(
     # Get initial conditions
     initial_conditions = get_initial_conditions_from_json(_initial_conditions_file)
     # Invoke main process
-    MultiTracker().tracking_calculate(
+    MultiTracker.tracking_calculate(
         initial_conditions, 
         _video_input_file, 
         _video_output_file, 

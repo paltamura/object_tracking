@@ -12,6 +12,7 @@ class H264Writer():
         compression_log_level):
 
         br_string = str(bitrate) + "k"
+        # Invoke ffmpeg process through subprocess
         self.p = Popen([
                 'ffmpeg', 
                 '-hide_banner', 

@@ -31,9 +31,7 @@ class TrackerWrapper:
 
 
 class MultiTracker():
-    
-
-    def create_tracker(self, tracker_type):
+    def create_tracker(tracker_type):
         if tracker_type.name == 'BOOSTING':
             return cv2.TrackerBoosting_create()
         if tracker_type.name == 'MIL':
@@ -51,14 +49,13 @@ class MultiTracker():
         if tracker_type.name == "CSRT":
             return cv2.TrackerCSRT_create()
 
-    def create_and_init_tracker(self, ref_frame, initial_condition, tracker_type):
+    def create_and_init_tracker(ref_frame, initial_condition, tracker_type):
         coordinates = initial_condition.coordinates
-        tracker = self.create_tracker(tracker_type)
+        tracker = MultiTracker.create_tracker(tracker_type)
         tracker.init(ref_frame, tuple(coordinates))
         return TrackerWrapper(initial_condition, tracker)
 
     def tracking_calculate(
-        self, 
         initial_conditions,
         _video_input_file,
         _video_output_file,
@@ -69,31 +66,33 @@ class MultiTracker():
         _output_bitrate,
         _output_bitrate_inherits_from_input):
 
+        # Check file
         if not exists(_video_input_file):
-            Helper.get_log().error('Could not open ' + _video_input_file)
+            Helper.get_log().error('Could not found ' + _video_input_file)
             sys.exit()
         video = cv2.VideoCapture(_video_input_file)
 
+        # Check file
         if not video.isOpened():
             Helper.get_log().error("Could not open video")
             sys.exit()
         ok, first_frame = video.read()
 
+        # Check file
         if not ok:
             Helper.get_log().error('Cannot read video file')
             sys.exit()
 
         tracker_wrappers = []
         for initial_condition in initial_conditions:
-            tracker_wrappers.append(self.create_and_init_tracker(
+            tracker_wrappers.append(MultiTracker.create_and_init_tracker(
                 first_frame, initial_condition, TrackerType[_tracker_algorithm]))
 
-        # fps = 24
-        # bitrate = 3000
         efective_bitrate = _output_bitrate
         if _output_bitrate_inherits_from_input:
             efective_bitrate = int(video.get(cv2.CAP_PROP_BITRATE))
 
+        # Print input files features
         total_frames = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
         Helper.get_log().info('=====================================================================')
         Helper.get_log().info('Input')
