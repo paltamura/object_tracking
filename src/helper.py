@@ -3,7 +3,7 @@ import logging
 from sys import stdout
 import sys
 
-
+# Class used to gather the cross functionalities
 class Helper:
     __config = None
     __logger = None

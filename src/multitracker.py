@@ -29,7 +29,8 @@ class TrackerWrapper:
         self.initial_condition = initial_condition
         self.tracker = tracker
 
-
+# class used to process a video input together with a collection of initial bounding boxes, 
+# and obtain an output video with the tracking of the objects contained in said bounding boxes.
 class MultiTracker():
     def create_tracker(tracker_type):
         if tracker_type.name == 'BOOSTING':

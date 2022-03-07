@@ -47,7 +47,7 @@ def tracking_calculate(
         _output_bitrate,
         _output_bitrate_inherits_from_input)
 
-
+# Application entry point
 if __name__ == "__main__":
     # Read configurations
     config = Helper.get_config()

@@ -2,6 +2,7 @@ import sys
 from PIL import Image
 from subprocess import Popen, PIPE
 
+# Class used for writing compressed video files using the h264 codec
 class H264Writer():
     def __init__(
         self, 
