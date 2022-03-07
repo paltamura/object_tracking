@@ -1,6 +1,6 @@
 # Object Tracking
 
-A tracking algorithm consists of predicting the position of an object in a given frame knowing the position of said object in the previous frame. In general, in the area of Computer Vision, the position of an object in an image is defined from a rectangle (usually known as a Bounding Box) so that, when the rectangle is drawn on the image, the object is inside. of the rectangle.
+A tracking algorithm consists of predicting the position of an object in a given frame knowing the position of said object in the previous frame. In general, in the area of Computer Vision, the position of an object in an image is defined from a rectangle (usually known as a Bounding Box) so that, when the rectangle is drawn on the image, the object is inside of the rectangle.
 
 This system allows tracking different objects in a video.
 The system accepts as input parameters the video, which is going to be processed, and a file in JSON format where the initial state of each of the objects to be tracked is defined.
