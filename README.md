@@ -55,7 +55,7 @@ To simplify the deployment, a ***Dockerfile*** was created from where the enviro
 
 A ***docker-compose.yml*** file was also created in which the construction of the docker image is invoked, and a volume is established for the exchange of files between local and container.
 
-## High level usage diagram
+## High level diagram
 
 ```mermaid
   graph TD;
