@@ -1,6 +1,6 @@
 # Object Tracking
 
-```bash
+```Bash
 docker-compose up
 ```
 
@@ -9,20 +9,30 @@ docker-compose up
 
     .
     ├── ...
-    ├── test                    # Test files (alternatively `spec` or `tests`)
-    │   ├── benchmarks          # Load and stress tests
-    │   ├── integration         # End-to-end, integration tests (alternatively `e2e`)
-    │   └── unit                # Unit tests
+    ├── data-io                  # Test files (alternatively `spec` or `tests`)
+    │   ├── input                # Load and stress tests
+    │   │   ├── integration      # End-to-end, integration tests (alternatively `e2e`)
+    │   │   └── input.mkv        # Unit tests
+    │   └── output               # Unit tests
+    │       └── output.mkv       # Unit tests
     └── ...
     
 
-> **B:** Because you don't want to test the code, you want to test the *program*.
+
+> **B:** Use diagram.
 ```mermaid
   graph TD;
-      Read video file-->B;
-      A-->C;
-      B-->D;
-      C-->D;
+      main-->MultiTracker;
+      main-->Helper;
+
+      MultiTracker-->OpenCV;
+      MultiTracker-->H264Writer;
+      MultiTracker-->Helper;
+
+      H264Writer-->PIL;
+      H264Writer-->subprocess;
+      subprocess-->FFmpeg;
+      
 ```
 
 > **C:** Because you don't want to test the code, you want to test the *program*.
