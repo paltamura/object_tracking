@@ -70,20 +70,20 @@ A ***docker-compose.yml*** file was also created in which the construction of th
       subprocess-->FFmpeg;
 ```
 
-## Construido con 🛠️
+## Built with 🛠️
 
-_Herramientas utilizadas para crear este proyecto_
-* [Dropwizard](https://docs.python.org/3/library/subprocess.html) - El framework web usado
-* [Dropwizard](https://docs.python.org/3/library/configparser.html#supported-ini-file-structure) - El framework web usado
-* [Dropwizard](https://docs.docker.com/compose/) - El framework web usado
-* [Dropwizard](https://www.docker.com/) - El framework web usado
-* [Dropwizard](https://ffmpeg.org/ffmpeg.html) - El framework web usado
-* [Dropwizard](https://opencv.org/) - El framework web usado
-* [Dropwizard](https://github.com/cisco/openh264) - El framework web usado
+_Tools used to create this project_
+* [OpenCV](https://opencv.org/) - Video processing, object tracking
+* [FFmpeg](https://ffmpeg.org/ffmpeg.html) - Compression library
+* [openh264](https://github.com/cisco/openh264) - Compression codec
+* [Subprocess](https://docs.python.org/3/library/subprocess.html) - Process invoke from python
+* [Configparser](https://docs.python.org/3/library/configparser.html#supported-ini-file-structure) - Configuration manager
+* [Docker](https://www.docker.com/) - Deploy automation
+* [Docker Compose](https://docs.docker.com/compose/) - Deploy automation
 
-## Licencia 📄
+## License 📄
 
-Este proyecto está bajo la Licencia MIT - mira el archivo [LICENSE.md](LICENSE.md) para detalles
+This project is licensed under the MIT License - see the file [LICENSE.md](LICENSE.md) for details
 
 ---
 ⌨️ con ❤️ por [paltamura](https://github.com/paltamura) 😊
