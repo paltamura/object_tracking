@@ -20,10 +20,10 @@ docker-compose up
     ├── ...
     ├── data-io
     │   ├── input
-    │   │   ├── integration      <- End-to-end, integration tests (alternatively `e2e`)
-    │   │   └── input.mkv        <- Unit tests
+    │   │   ├── initial_conditions.json   <- replace with your file
+    │   │   └── input.mkv                 <- replace with your file
     │   └── output
-    │       └── output.mkv       <- Unit tests
+    │       └── output.mkv                
     └── ...
 
 > **B:** Because you don't want to test the code, you want to test the *program*.
