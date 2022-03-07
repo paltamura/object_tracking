@@ -1,4 +1,9 @@
-# object_tracking
+# Object Tracking
+
+```bash
+docker-compose up
+```
+
 
 > **A:** Because you don't want to test the code, you want to test the *program*.
 
@@ -14,7 +19,7 @@
 > **B:** Because you don't want to test the code, you want to test the *program*.
 ```mermaid
   graph TD;
-      A-->B;
+      Read video file-->B;
       A-->C;
       B-->D;
       C-->D;
