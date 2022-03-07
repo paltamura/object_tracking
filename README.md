@@ -5,7 +5,6 @@ A tracking algorithm consists of predicting the position of an object in a given
 This system allows tracking different objects in a video.
 The system accepts as input parameters the video, which is going to be processed, and a file in JSON format where the initial state of each of the objects to be tracked is defined.
 
-In the JSON file you will find, among other things, the bounding box of each object in tuple format (x, y, width, height) where x, y represent the coordinates of the pixels in the upper left corner of the bounding box, width y height son is the width and height, in pixels, of the bounding box.
 As output, the system generates a video with the data obtained from the tracking. The video shows each frame with the bounding boxes obtained for each of the defined objects.
 
 
