@@ -12,7 +12,7 @@ git clone https://github.com/paltamura/object_tracking.git
 docker-compose up
 ```
 
-## Custom Example
+## Custom Data Example
 
 > **A:** Because you don't want to test the code, you want to test the *program*.
 
